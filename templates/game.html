@@ -1,0 +1,34 @@
+<html>
+<head>
+<style>
+div.playerzone {
+    height: 50%;
+}
+</style>
+<body>
+<div class="playerzone" id="me">
+<h1>{{ me.name }}</h1>
+    <div class="deck">Deck</div>
+    <div class="cimetiere">Cimetiere</div>
+    <div class="main">
+    {% for card in me.main.card_set.all %}
+    {{ card.ctyp }}
+    {% endfor %}
+    </div>
+
+    <div class="table">
+    {% for card in me.table.card_set.all %}
+    {{ card.ctyp }}
+    {% endfor %}
+    </div>
+</div>
+<div class="playerzone" id="him">
+<h1>{{ him.name }}</h1>
+    <div class="table">
+    {% for card in him.table.card_set.all %}
+    {{ card.ctyp }}
+    {% endfor %}
+    </div>
+</div>
+</body>
+</html>

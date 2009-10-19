@@ -1,0 +1,139 @@
+Ressources
+==========
+
+Sang
+----
+
+Bois
+----
+
+Alcool
+------
+
+Or
+--
+
+Mana
+----
+
+Cartes (19)
+==========
+
+Production de ressources
+------------------------
+
+Bureau de don
+    Production de Sang
+    Donnez votre sang. Si ce n'est pas pour aider un blessé, ça sera pour aider un mort....
+Cabane de bûcheron
+    Production de Bois
+    Tant que ses coups de haches ne sont qu'à destination des arbres, tout va bien
+Distillerie
+    Production d'Alcool
+    Comment ça il faut une autorisation ?
+Wall Street
+    Production d'Or
+    Ce n'est pas de l'argent virtuel, c'est juste qu'on s'en sert même s'il n'existe pas
+Temple
+    Production de Mana
+    Oooooooooooooooooooooooooom
+
+Echange de ressources
+---------------------
+
+Sorcier à louer
+    Lancer un sort en utilisant de l'Or au lieu de Mana
+    Pourquoi passer des années à étudier la sorcellerie quand on peut se payer un sorcier ?
+
+Contexte
+--------
+
+Jour
+    Contexte temporel (Annule Nuit)
+    Les créatures de la nuit ne peuvent pas jouer
+
+Nuit
+    Contexte temporel (Annule Jour)
+    Les créatures de la nuit gagnent +1 en ATT et en DEF
+
+Préhistoire
+    Contexte temporel (Annule .....)
+    Les Eléphants sont des Mamouths et gagnent +3ATT et +3DEF
+    Les armes à feu, robots ne fonctionnent pas
+
+Forêt
+    Carte contexte géographique
+    Toutes les créatures de la forêt gagnent +2 en DEF
+
+Créatures
+---------
+
+Rat
+    En sacrifiant un Rat, le joueur gagne 1 Sang
+    A défaut d'être efficace, il est toujours utile...
+    1PDD
+    3ATT
+    1DEF
+    1PDV
+
+Eléphant
+    Attaque contondante
+    4PDD
+    2ATT
+    2DEF
+    9PDV
+
+Gardien
+    Attaque à l'arme à feu
+    Robot
+    3PDD
+    4ATT
+    2DEF
+    5PDV
+
+Centaure
+    Attaque à l'arc
+    Créature de la forêt
+    2PDD
+    3ARR
+    3DEF
+    5PDV
+
+Vampire
+    Attaque de dents
+    Créature de la nuit
+    Récupère 1PDV à chaque attaque réussie
+    2PDD
+    4ATT
+    3DEF
+    8PDV
+
+Zombie
+    Attaque d'ongles
+    Attaque de dents
+    Empoisonne pour 1PDD/Tour pendant 3 Tours
+    3PDD
+    2ATT
+    1DEF
+    5PDV
+
+Sorts et attaques
+-----------------
+
+Tommy Gun
+    Attaque à l'arme à feu
+    Ignore les protections magiques
+    Ne peut endommager les spectres et morts-vivants
+    3 PDD
+
+Soin
+    Récupérez 3PDV
+
+Evènements
+----------
+
+Plus rien n'est clair
+    Supprime toutes les cartes contexte
+
+Touché divain
+    Tous les joueurs gagnent 2PDV

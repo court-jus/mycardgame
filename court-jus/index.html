@@ -1,0 +1,18 @@
+<html>
+    <body>
+        Cartes :
+        <dl>
+            {% for c in cartes %}
+            <dt>{{ c.name }}</dt>
+            <dd>{{ c.desc }}</dd>
+            {% endfor %}
+        </dl>
+        Ajouter une carte :
+        <form action="addcard" method="post">
+        <input type="hidden" name="action" value="addcard" />
+        <input type="text" name="name" /><br/>
+        <textarea name="desc"></textarea>
+        <input type="submit" value="Ajouter"/>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,100 @@
+body
+    {
+    background-color: saddlebrown;
+    }
+
+div.card
+    {
+    width: 45px;
+    height: 64px;
+    font-size: 0.3em;
+    background-image: url(/img/cardfront_r.png);
+    display: inline-block;
+    }
+
+div.cardback
+    {
+    background-image: url(/img/cardback_r.png);
+    }
+
+div.bigcard
+    {
+    width: 180px;
+    height: 256px;
+    background-image: url(/img/cardfront_b.png);
+    }
+
+div.bigcard div.cardback
+    {
+    background-image: url(/img/cardback_b.png);
+    }
+
+div#hand1
+    {
+    position: absolute;
+    top: 10px;
+    left: 400px;
+    }
+
+div#hand2
+    {
+    position: absolute;
+    bottom: 10px;
+    left: 400px;
+    }
+
+div#cardshow
+    {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    }
+
+div#deck1
+    {
+    position: absolute;
+    top: 10px;
+    left: 200px;
+    }
+
+div#deck2
+    {
+    position: absolute;
+    bottom: 10px;
+    left: 200px;
+    }
+
+div#cim1
+    {
+    position: absolute;
+    top: 10px;
+    left: 300px;
+    }
+
+div#cim2
+    {
+    position: absolute;
+    bottom: 10px;
+    left: 300px;
+    }
+
+div.bigcard img
+    {
+    margin-left: 15px;
+    margin-top: 15px;
+    }
+
+div.bigcard span.cardtitle
+    {
+    margin-left: 15px;
+    }
+
+div.bigcard div.carddesc
+    {
+    margin-left: 15px;
+    border: 1px solid #ccc;
+    width: 150px;
+    height: 100px;
+    font-size: 0.8em;
+    background-color: #ddd;
+    }

@@ -8,13 +8,21 @@ from google.appengine.ext.webapp import template
 
 from models import *
 
+def getFullPath(filename):
+    return os.path.join(os.path.dirname(__file__), filename)
+
 class MainPage(webapp.RequestHandler):
     def get(self):
-        self.response.out.write(template.render(os.path.join(os.path.dirname(__file__), 'index.html'),{}))
+        self.response.out.write(template.render(getFullPath('index.html'),{}))
+
 class CardList(webapp.RequestHandler):
     def get(self):
         cartes = CardType.all()
-        self.response.out.write(template.render(os.path.join(os.path.dirname(__file__), 'cardlist.html'),{'cartes': cartes}))
+        self.response.out.write(template.render(getFullPath('cardlist.html'),{'cartes': cartes}))
+
+class Table(webapp.RequestHandler):
+    def get(self):
+        self.response.out.write(template.render(getFullPath('table.html'),{'hand1':['coucou','toi','hello','world'],'hand2':[1,2,3]}))
 
 class Actions(webapp.RequestHandler):
     def post(self):
@@ -36,7 +44,9 @@ class Actions(webapp.RequestHandler):
 application = webapp.WSGIApplication(
     [('/', MainPage),
      ('/cards', CardList),
-     ('/addcard', Actions)],
+     ('/addcard', Actions),
+     ('/table',Table),
+    ],
     debug = True)
 
 def main():

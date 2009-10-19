@@ -10,8 +10,11 @@ from models import *
 
 class MainPage(webapp.RequestHandler):
     def get(self):
+        self.response.out.write(template.render(os.path.join(os.path.dirname(__file__), 'index.html')))
+class CardList(webapp.RequestHandler):
+    def get(self):
         cartes = CardType.all()
-        self.response.out.write(template.render(os.path.join(os.path.dirname(__file__), 'index.html'),{'cartes': cartes}))
+        self.response.out.write(template.render(os.path.join(os.path.dirname(__file__), 'cardlist.html'),{'cartes': cartes}))
 
 class Actions(webapp.RequestHandler):
     def post(self):
@@ -32,6 +35,7 @@ class Actions(webapp.RequestHandler):
 
 application = webapp.WSGIApplication(
     [('/', MainPage),
+     ('/cards', CardList),
      ('/addcard', Actions)],
     debug = True)
 

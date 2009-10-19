@@ -10,7 +10,7 @@ from models import *
 
 class MainPage(webapp.RequestHandler):
     def get(self):
-        self.response.out.write(template.render(os.path.join(os.path.dirname(__file__), 'index.html')))
+        self.response.out.write(template.render(os.path.join(os.path.dirname(__file__), 'index.html'),{}))
 class CardList(webapp.RequestHandler):
     def get(self):
         cartes = CardType.all()

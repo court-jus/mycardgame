@@ -4,9 +4,37 @@
 <head>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
 <link rel="stylesheet" href="/css/table.css"/>
+<script type="text/javascript">
+function showCard(card_id)
+    {
+    var bigdiv = document.getElementById('cardshow');
+    var xhr = new window.XMLHttpRequest();
+
+    xhr.onreadystatechange = function()
+        {
+        if (xhr.readyState == 4)
+            {
+            if (xhr.status == 200)
+                {
+                bigdiv.innerHTML = xhr.responseText;
+                }
+            }
+        }
+    xhr.open("POST","/tools/getBigCard",true);
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xhr.send("card_id=" + card_id);
+
+    }
+</script>
 <title>Unnamed card game</title>
 </head>
 <body>
+<div id="debug">
+{% for c in debug %}
+{{ c.getHTML }}<br/>
+{% endfor %}
+<a href="/table?reset=true">reset</a>
+</div>
 <div class="deck" id="deck1">
     <div class="cardback card">&nbsp;</div>
 </div>
@@ -21,7 +49,7 @@
 </div>
 <div class="hand" id="hand1">
 {% for c in hand1 %}
-    <div class="card">{{c}}</div>
+    {{c.getHTML}}
 {% endfor %}
 </div>
 <div class="hand" id="hand2">
@@ -36,8 +64,9 @@
 <div class="table" id="table2">
 </div>
 <div id="cardshow">
-    <!--<div class="cardback bigcard">&nbsp;</div>-->
+    <!--<div class="cardback bigcard">&nbsp;</div>
     <div class="bigcard"><img src="/img/card1_b.png"/><span class="cardtitle">Card title</span><div class="carddesc">Une longue longue description.</div></div>
+    -->
 </div>
 </body>
 </html>

@@ -98,3 +98,33 @@ div.bigcard div.carddesc
     font-size: 0.8em;
     background-color: #ddd;
     }
+
+div.card img
+    {
+    margin-left: 4px;
+    margin-top: 4px;
+    }
+
+div.card span.cardtitle
+    {
+    margin-left: 4px;
+    width: 5px;
+    }
+div.card div.carddesc
+    {
+    margin-left: 4px;
+    border: 1px solid #ccc;
+    width: 35px;
+    height: 20px;
+    font-size: 0.5em;
+    background-color: #ddd;
+    }
+
+div.bigcard div.cardquote
+    {
+    border-top: 1px solid #ccc;
+    font-size: 0.7em;
+    position: absolute;
+    width: 150px;
+    bottom: 15px;
+    }

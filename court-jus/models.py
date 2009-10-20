@@ -27,9 +27,20 @@ class CardType(db.Model):
     cat                = db.ReferenceProperty(CardCategory)
     need               = db.ReferenceProperty(Contrainte)
     desc               = db.TextProperty()
+    quote              = db.TextProperty()
+    img                = db.StringProperty()
     def __unicode__(self):
         return "[%s]" % self.name
-        
+
+    def getHTML(self, big = False):
+        return """<div class="%scard" onmouseover="javascript:showCard('%s');">
+<img src="/img/%s.png">
+<span class="cardtitle">%s</span>
+<div class="carddesc">%s
+<div class="cardquote">%s</div>
+</div>
+</div>""" % ((big and "big" or ""), self.key(), (self.img or "card1") + (big and "_b" or "_r"), self.name, self.desc, self.quote)
+         #(big and "" or "onmouseover='javascript:showCard(" + self.key() + ");'"),
 class Card(db.Model):
     ctyp               = db.ReferenceProperty(CardType)
     lieu               = db.ReferenceProperty(ManyCards)

@@ -128,3 +128,12 @@ div.bigcard div.cardquote
     width: 150px;
     bottom: 15px;
     }
+
+a img {
+    border: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}

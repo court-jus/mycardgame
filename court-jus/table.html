@@ -5,7 +5,7 @@
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
 <link rel="stylesheet" href="/css/table.css"/>
 <script type="text/javascript">
-function showCard(card_id)
+function showCard(ctyp_id)
     {
     var bigdiv = document.getElementById('cardshow');
     var xhr = new window.XMLHttpRequest();
@@ -22,13 +22,41 @@ function showCard(card_id)
         }
     xhr.open("POST","/tools/getBigCard",true);
     xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-    xhr.send("card_id=" + card_id);
+    xhr.send("ctyp_id=" + ctyp_id);
 
+    }
+
+function playCard(card_id,adv_id)
+    {
+    var msgdiv = document.getElementById('messages');
+    var carddiv = document.getElementById('card_' + card_id)
+    var currentplace = carddiv.parentNode;
+    var xhr = new window.XMLHttpRequest();
+
+    xhr.onreadystatechange = function()
+        {
+        if (xhr.readyState == 4)
+            {
+            if (xhr.status == 200)
+                {
+                var nextplace = document.getElementById(xhr.responseText);
+                nextplace.appendChild(carddiv);
+                currentplace.parentNode.removeChild(currentplace);
+                msgdiv.innerHTML = xhr.responseText;
+                }
+            }
+        }
+    xhr.open("POST","/tools/playCard",true);
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xhr.send("card_id=" + card_id + "&adv_id=" + adv_id);
     }
 </script>
 <title>Unnamed card game</title>
 </head>
 <body>
+<div id="messages">
+coucou
+</div>
 <div id="debug">
 {% for c in debug %}
 {{ c.getHTML }}<br/>
@@ -47,8 +75,10 @@ function showCard(card_id)
     <div class="card">&nbsp;</div>
 </div>
 <div class="hand" id="hand1">
-{% for c in hand1 %}
+{% for c in j1.main.card_set %}
+<a href="javascript:playCard('{{c.key}}','{{j2.key}}');">
     {{c.getHTML}}
+</a>
 {% endfor %}
 </div>
 <div class="hand" id="hand2">

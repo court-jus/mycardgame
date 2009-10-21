@@ -39,8 +39,7 @@ class CardType(db.Model):
 <div class="carddesc">%s
 <div class="cardquote">%s</div>
 </div>
-</div>""" % ((big and "big" or ""), self.key(), (self.img or "card1") + (big and "_b" or "_r"), self.name, self.desc, self.quote)
-         #(big and "" or "onmouseover='javascript:showCard(" + self.key() + ");'"),
+</div>""" % ((big and "big" or ""), self.key(), (self.img or "card1") + (big and "_b" or "_r"), self.name, (big and self.desc or ""), (big and self.quote or ""))
 class Card(db.Model):
     ctyp               = db.ReferenceProperty(CardType)
     lieu               = db.ReferenceProperty(ManyCards)
@@ -48,33 +47,42 @@ class Card(db.Model):
     def canPlay(self, adv):
         joueur     = self.lieu.joueur_main.get()
         contrainte = self.ctyp.need
-        print "on commence par verifier les ressources :"
-        for price in contrainte.price_set.all():
-            print price
-            found_stock = False
-            stock_joueur = joueur.stock_set.filter(ressource = price.ressource)
-            if stock_joueur:
-                for sj in stock_joueur:
-                    if sj.quantite >= price.qte:
-                        found_stock = True
-                        break
-            if not found_stock:
-                return "pas assez de %s" % (price.ressource,)
-        print "ensuite les cartes qu'on a sur la table"
-        for card in contrainte.need_on_self_table.all():
-            print card
-            if not joueur.table.card_set.filter(ctyp = card):
-                return "nécessite d'avoir la carte %s sur la table" % (card,)
-        print "enfin les cartes que l'adversaire a sur la table"
-        for card in contrainte.need_on_adv_table.all():
-            print card
-            if not adv.table.card_set.filter(ctyp = card):
-                return "nécessite que l'adversaire ait la carte %s sur la table" % (card,)
+        if contrainte:
+            print "on commence par verifier les ressources :"
+            for price in contrainte.price_set.all():
+                print price
+                found_stock = False
+                stock_joueur = joueur.stock_set.filter(ressource = price.ressource)
+                if stock_joueur:
+                    for sj in stock_joueur:
+                        if sj.quantite >= price.qte:
+                            found_stock = True
+                            break
+                if not found_stock:
+                    return "pas assez de %s" % (price.ressource,)
+            print "ensuite les cartes qu'on a sur la table"
+            for card in contrainte.need_on_self_table.all():
+                print card
+                if not joueur.table.card_set.filter(ctyp = card):
+                    return "nécessite d'avoir la carte %s sur la table" % (card,)
+            print "enfin les cartes que l'adversaire a sur la table"
+            for card in contrainte.need_on_adv_table.all():
+                print card
+                if not adv.table.card_set.filter(ctyp = card):
+                    return "nécessite que l'adversaire ait la carte %s sur la table" % (card,)
         return True
-        
 
     def __unicode__(self):
         return "%s-%s" % (self.ctyp,self.lieu)
+
+    def getHTML(self, big = False):
+        return """<div id="card_%s" class="%scard" onmouseover="javascript:showCard('%s');">
+<img src="/img/%s.png">
+<span class="cardtitle">%s</span>
+<div class="carddesc">%s
+<div class="cardquote">%s</div>
+</div>
+</div>""" % (self.key(), (big and "big" or ""), self.ctyp.key(), (self.ctyp.img or "card1") + (big and "_b" or "_r"), self.ctyp.name, (big and self.ctyp.desc or ""), (big and self.ctyp.quote or ""))
 
 class Price(db.Model):
     ressource          = db.ReferenceProperty(Ressource)

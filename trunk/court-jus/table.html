@@ -39,16 +39,33 @@ function playCard(card_id,adv_id)
             {
             if (xhr.status == 200)
                 {
-                var nextplace = document.getElementById(xhr.responseText);
-                nextplace.appendChild(carddiv);
-                currentplace.parentNode.removeChild(currentplace);
-                msgdiv.innerHTML = xhr.responseText;
+                eval(xhr.responseText);
                 }
             }
         }
     xhr.open("POST","/tools/playCard",true);
     xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
     xhr.send("card_id=" + card_id + "&adv_id=" + adv_id);
+    }
+
+function drawCard(player_id)
+    {
+    var msgdiv = document.getElementById('messages');
+    var xhr = new window.XMLHttpRequest();
+
+    xhr.onreadystatechange = function()
+        {
+        if (xhr.readyState == 4)
+            {
+            if (xhr.status == 200)
+                {
+                eval(xhr.responseText);
+                }
+            }
+        }
+    xhr.open("POST","/tools/drawCard",true);
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xhr.send("player_id=" + player_id);
     }
 </script>
 <title>Unnamed card game</title>
@@ -63,7 +80,7 @@ coucou
 {% endfor %}
 </div>
 <div class="deck" id="deck1">
-    <div class="cardback card">&nbsp;</div>
+    <a href="javascript:drawCard('{{j1.key}}');"><div class="cardback card">&nbsp;</div></a>
 </div>
 <div class="deck" id="deck2">
     <div class="cardback card">&nbsp;</div>

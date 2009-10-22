@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from google.appengine.ext import db
+import sys
 
 class ManyCards(db.Model):
     name               = db.StringProperty()
@@ -48,26 +49,20 @@ class Card(db.Model):
         joueur     = self.lieu.joueur_main.get()
         contrainte = self.ctyp.need
         if contrainte:
-            print "on commence par verifier les ressources :"
-            for price in contrainte.price_set.all():
-                print price
+            for price in contrainte.price_set:
                 found_stock = False
-                stock_joueur = joueur.stock_set.filter(ressource = price.ressource)
+                stock_joueur = joueur.stock_set.filter('ressource = ',price.ressource.key())
                 if stock_joueur:
                     for sj in stock_joueur:
                         if sj.quantite >= price.qte:
                             found_stock = True
                             break
                 if not found_stock:
-                    return "pas assez de %s" % (price.ressource,)
-            print "ensuite les cartes qu'on a sur la table"
+                    return "Not enough %s" % (price.ressource.name,)
             for card in contrainte.need_on_self_table.all():
-                print card
                 if not joueur.table.card_set.filter(ctyp = card):
                     return "nécessite d'avoir la carte %s sur la table" % (card,)
-            print "enfin les cartes que l'adversaire a sur la table"
             for card in contrainte.need_on_adv_table.all():
-                print card
                 if not adv.table.card_set.filter(ctyp = card):
                     return "nécessite que l'adversaire ait la carte %s sur la table" % (card,)
         return True
@@ -105,6 +100,7 @@ class Joueur(db.Model):
     table              = db.ReferenceProperty(ManyCards, collection_name = 'joueur_table')
     vie                = db.IntegerProperty()
     name               = db.StringProperty()
+    adv                = db.SelfReferenceProperty()
     def __unicode__(self):
         return self.name
 

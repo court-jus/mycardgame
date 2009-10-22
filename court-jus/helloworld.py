@@ -59,11 +59,18 @@ def GenerateCards():
     contraintes = Contrainte.all()
     for c in contraintes:
         c.delete()
+    bldoc = Contrainte(name="For bldo")
+    bldoc.put()
+    # prices
+    for p in Price.all():
+        p.delete()
+    bldop = Price(ressource = wood, contrainte = bldoc, qte = 1)
+    bldop.put()
     # cardtypes
     cardtypes = CardType.all()
     for c in cardtypes:
         c.delete()
-    bldo = CardType(name="Blood Donation",desc="Produces 1 blood per turn",quote="Give your blood, if it doesn't help an injuried one, it can help a dead one...",img="blooddonation",cat=factory)
+    bldo = CardType(name="Blood Donation",desc="Produces 1 blood per turn",quote="Give your blood, if it doesn't help an injuried one, it can help a dead one...",img="blooddonation",cat=factory, need = bldoc)
     bldo.put()
     wocu = CardType(name="Wood Cutter",desc="Produces 1 wood per turn",quote="As long as he uses his axe against trees only, everything is cool.",cat=factory)
     wocu.put()
@@ -79,14 +86,31 @@ def GenerateCards():
     c.put()
     c = Card(ctyp = alem, lieu = hand1)
     c.put()
+    # in the deck
+    c = Card(ctyp = alem, lieu = deck1)
+    c.put()
+    c = Card(ctyp = alem, lieu = deck1)
+    c.put()
+    c = Card(ctyp = alem, lieu = deck1)
+    c.put()
+    c = Card(ctyp = alem, lieu = deck1)
+    c.put()
     # players
     js = Joueur.all()
     for j in js:
         j.delete()
     j1 = Joueur(deck=deck1,main=hand1,cimetiere=cem1,table=table1,vie=20,name="Player 1")
     j1.put()
-    j2 = Joueur(deck=deck2,main=hand2,cimetiere=cem2,table=table2,vie=20,name="Player 2")
+    j2 = Joueur(deck=deck2,main=hand2,cimetiere=cem2,table=table2,vie=20,name="Player 2", adv = j1)
     j2.put()
+    j1.adv = j2
+    j1.put()
+    j2.put()
+    # stock
+    for s in Stock.all():
+        s.delete()
+    s = Stock(ressource = wood, quantite = 0, joueur = j1)
+    s.put()
     return (j1.key(), j2.key())
 
 def getFullPath(filename):
@@ -156,10 +180,36 @@ class playCard(webapp.RequestHandler):
                 return
             if c and adv:
                 canp = c.canPlay(adv)
-                self.response.out.write((canp is True) and "table1" or "NO")
+                if canp is True:
+                    js = """var nextplace = document.getElementById('table1');
+                nextplace.appendChild(carddiv);
+                currentplace.parentNode.removeChild(currentplace);"""
+                else:
+                    js = """alert("Can't play this card right now : %s");""" % (canp,);
+                self.response.out.write(js.replace('"','\"'),)
+
                 return
         self.response.out.write("erreur inconnue")
-        return
+
+class drawCard(webapp.RequestHandler):
+    def post(self):
+        g = self.request.get
+        if g('player_id'):
+            p = Joueur.get(g('player_id'))
+            if not p:
+                self.response.out.write("Unknown player")
+                return
+            deck = p.deck
+            hand = p.main
+            try:
+                pick_up = deck.card_set[0]
+                pick_up.lieu = hand
+                pick_up.put()
+                self.response.out.write("""var dest = document.getElementById('hand1'); dest.innerHTML += "<a href=\\\"javascript:playCard('%s','%s');\\\">%s</a>";""" % (pick_up.key(),pick_up.lieu.joueur_main[0].adv.key(),pick_up.getHTML().replace('"','\\\"').replace("\n",""),))
+            except IndexError:
+                self.response.out.write("""alert('No more card to pick');""");
+            return
+        self.response.out.write("erreur, no player_id")
 
 application = webapp.WSGIApplication(
     [('/', MainPage),
@@ -168,6 +218,7 @@ application = webapp.WSGIApplication(
      ('/table',Table),
      ('/tools/getBigCard',getBigCard),
      ('/tools/playCard',playCard),
+     ('/tools/drawCard',drawCard),
     ],
     debug = True)
 

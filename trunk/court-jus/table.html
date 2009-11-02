@@ -79,8 +79,18 @@ coucou
 {{ c.getHTML }}<br/>
 {% endfor %}
 </div>
+<div class="stocks" id="stock1">
+{% for s in j1.stock_set %}
+{{ s.ressource.name }} : {{ s.quantite }}
+{% endfor %}
+</div>
 <div class="deck" id="deck1">
     <a href="javascript:drawCard('{{j1.key}}');"><div class="cardback card">&nbsp;</div></a>
+</div>
+<div class="stocks" id="stock2">
+{% for s in j2.stock_set %}
+{{ s.ressource.name }} : {{ s.quantite }}
+{% endfor %}
 </div>
 <div class="deck" id="deck2">
     <div class="cardback card">&nbsp;</div>

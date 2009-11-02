@@ -59,10 +59,10 @@ class Card(db.Model):
                             break
                 if not found_stock:
                     return "Not enough %s" % (price.ressource.name,)
-            for card in contrainte.need_on_self_table.all():
+            for card in contrainte.needonselftable_set:
                 if not joueur.table.card_set.filter(ctyp = card):
                     return "nécessite d'avoir la carte %s sur la table" % (card,)
-            for card in contrainte.need_on_adv_table.all():
+            for card in contrainte.needonadvtable_set:
                 if not adv.table.card_set.filter(ctyp = card):
                     return "nécessite que l'adversaire ait la carte %s sur la table" % (card,)
         return True

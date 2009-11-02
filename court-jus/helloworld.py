@@ -64,7 +64,7 @@ def GenerateCards():
     # prices
     for p in Price.all():
         p.delete()
-    bldop = Price(ressource = wood, contrainte = bldoc, qte = 1)
+    bldop = Price(ressource = gold, contrainte = bldoc, qte = 1)
     bldop.put()
     # cardtypes
     cardtypes = CardType.all()
@@ -110,6 +110,12 @@ def GenerateCards():
     for s in Stock.all():
         s.delete()
     s = Stock(ressource = wood, quantite = 0, joueur = j1)
+    s.put()
+    s = Stock(ressource = gold, quantite = 5, joueur = j1)
+    s.put()
+    s = Stock(ressource = gold, quantite = 5, joueur = j2)
+    s.put()
+    s = Stock(ressource = wood, quantite = 0, joueur = j2)
     s.put()
     return (j1.key(), j2.key())
 

@@ -32,14 +32,14 @@ div.bigcard div.cardback
 div#hand1
     {
     position: absolute;
-    top: 10px;
+    top: 20px;
     left: 400px;
     }
 
 div#hand2
     {
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     left: 400px;
     }
 
@@ -53,28 +53,28 @@ div#cardshow
 div#deck1
     {
     position: absolute;
-    top: 10px;
+    top: 20px;
     left: 200px;
     }
 
 div#deck2
     {
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     left: 200px;
     }
 
 div#cim1
     {
     position: absolute;
-    top: 10px;
+    top: 20px;
     left: 300px;
     }
 
 div#cim2
     {
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     left: 300px;
     }
 
@@ -96,6 +96,18 @@ div#tablecommon
     {
     position: absolute;
     top: 400px;
+    left: 300px;
+    }
+div#stock1
+    {
+    position: absolute;
+    top: 0px;
+    left: 300px;
+    }
+div#stock2
+    {
+    position: absolute;
+    bottom: 0px;
     left: 300px;
     }
 

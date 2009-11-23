@@ -122,6 +122,10 @@ def GenerateCards():
 def getFullPath(filename):
     return os.path.join(os.path.dirname(__file__), filename)
 
+class MainPageFr(webapp.RequestHandler):
+    def get(self):
+        self.response.out.write(template.render(getFullPath('index-fr.html'),{}))
+
 class MainPage(webapp.RequestHandler):
     def get(self):
         self.response.out.write(template.render(getFullPath('index.html'),{}))
@@ -219,6 +223,7 @@ class drawCard(webapp.RequestHandler):
 
 application = webapp.WSGIApplication(
     [('/', MainPage),
+     ('/fr', MainPageFr),
      ('/cards', CardList),
      ('/addcard', Actions),
      ('/table',Table),
